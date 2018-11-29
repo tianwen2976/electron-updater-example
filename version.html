@@ -5,11 +5,18 @@
 </head>
 <body>
   Current version: <span id="version">vX.Y.Z</span>
-  <div id="messages"></div>
+  <div id="messages" style="color:red"></div>
+  
+   We are using Node.js <script>document.write(process.versions.node)</script>,
+    Chromium <script>document.write(process.versions.chrome)</script>,
+    and Electron <script>document.write(process.versions.electron)</script>.
+  
 <script>
 // Display the current version
 let version = window.location.hash.substring(1);
 document.getElementById('version').innerText = version;
+
+
 
 // Listen for messages
 const {ipcRenderer} = require('electron');
