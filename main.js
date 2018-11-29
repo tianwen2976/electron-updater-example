@@ -85,6 +85,7 @@ autoUpdater.on('download-progress', (progressObj) => {
   log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
   sendStatusToWindow(log_message);
 })
+
 autoUpdater.on('update-downloaded', (info) => {
   sendStatusToWindow('Update downloaded');
 });
@@ -95,8 +96,26 @@ app.on('ready', function() {
 
   createDefaultWindow();
 });
+
 app.on('window-all-closed', () => {
+  log.info('windlow-all-closed');
   app.quit();
+});
+
+
+
+
+autoUpdater.on('update-downloaded', (ev, info) => {
+  // Wait 5 seconds, then quit and install
+  // In your application, you don't need to wait 5 seconds.
+  // You could call autoUpdater.quitAndInstall(); immediately
+  setTimeout(function() {
+    autoUpdater.quitAndInstall();  
+  }, 5000)
+})
+
+app.on('ready', function()  {
+  autoUpdater.checkForUpdates();
 });
 
 //
@@ -109,9 +128,10 @@ app.on('window-all-closed', () => {
 // This will immediately download an update, then install when the
 // app quits.
 //-------------------------------------------------------------------
-app.on('ready', function()  {
-  autoUpdater.checkForUpdatesAndNotify();
-});
+//app.on('ready', function()  {
+//   log.info('call auto-updater.checkForUpdatesAndNotify');
+//   autoUpdater.checkForUpdatesAndNotify();
+//});
 
 //-------------------------------------------------------------------
 // Auto updates - Option 2 - More control
@@ -139,4 +159,4 @@ app.on('ready', function()  {
 // })
 // autoUpdater.on('update-downloaded', (info) => {
 //   autoUpdater.quitAndInstall();  
-// })
+//  })

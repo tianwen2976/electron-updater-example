@@ -18,6 +18,7 @@ ipcRenderer.on('message', function(event, text) {
   var message = document.createElement('div');
   message.innerHTML = text;
   container.appendChild(message);
+  console.log(text);
 })
 </script>
 </body>
